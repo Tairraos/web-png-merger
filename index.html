@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片合成器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="canvas-container">
+            <canvas id="imageCanvas" width="1536" height="864"></canvas>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+        </div>
+        
+        <div class="file-operations">
+            <input type="text" id="filenameInput" placeholder="文件名" class="filename-input">
+            <button id="saveBtn" class="btn btn-primary">保存</button>
+            <button id="clearBtn" class="btn btn-secondary">清除</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
