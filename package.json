@@ -11,5 +11,13 @@
   "keywords": ["image", "merger", "canvas", "frontend", "tool"],
   "author": "Tairraos",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tairraos/web-png-merger.git"
+  },
+  "homepage": "https://github.com/Tairraos/web-png-merger",
+  "bugs": {
+    "url": "https://github.com/Tairraos/web-png-merger/issues"
+  }
 }
