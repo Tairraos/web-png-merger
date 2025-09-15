@@ -37,6 +37,12 @@ body {
     background-color: #f9fafb;
     cursor: pointer;
     transition: border-color 0.2s ease;
+    /* 容器大小自适应canvas显示尺寸 */
+    display: inline-block;
+    width: fit-content;
+    height: fit-content;
+    max-width: 50vw;
+    max-height: 50vh;
 }
 
 .canvas-container:hover {
@@ -50,10 +56,12 @@ body {
 
 #imageCanvas {
     display: block;
-    max-width: 50%;
-    max-height: 50%;
+    /* 移除max-width和max-height限制，让容器来控制大小 */
     width: auto;
     height: auto;
+    /* 确保canvas不会超出视口的50% */
+    max-width: calc(50vw - 6px); /* 减去border宽度 */
+    max-height: calc(50vh - 6px); /* 减去border宽度 */
 }
 
 .file-operations {
