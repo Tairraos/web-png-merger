@@ -78,16 +78,27 @@ class ImageMerger {
     processImage(img) {
         // 简化逻辑：第一张图为水印图，第二张图为无水印图
         if (!this.watermarkImage) {
-            // 第一张图：水印图
+            // 第一张图：水印图 - 设置canvas为图片原始尺寸并保持比例
             this.canvas.width = img.width;
             this.canvas.height = img.height;
             
+            // 清空canvas并绘制第一张图片
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.ctx.drawImage(img, 0, 0);
             
+            // 在图片上方添加提示文字，告诉用户可以拖放第二张图片
+            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            this.ctx.fillRect(0, 0, this.canvas.width, 60);
+            
+            this.ctx.fillStyle = '#ffffff';
+            this.ctx.font = `${Math.max(16, this.canvas.width * 0.02)}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText('请拖放第二张图片（无水印图）进行合成', this.canvas.width / 2, 30);
+            
             this.watermarkImage = img;
             this.currentImage = img;
-            console.log('水印图已加载');
+            console.log('水印图已加载，等待第二张图片');
         } else {
             // 第二张图：无水印图
             this.normalImage = img;
@@ -115,21 +126,36 @@ class ImageMerger {
         // 在隐藏canvas上绘制无水印图
         hiddenCtx.drawImage(this.normalImage, 0, 0);
         
-        // 从无水印图的右下角提取140x50像素区域
-        const sourceX = Math.max(0, this.normalImage.width - 140);
-        const sourceY = Math.max(0, this.normalImage.height - 50);
-        const sourceWidth = Math.min(140, this.normalImage.width);
-        const sourceHeight = Math.min(50, this.normalImage.height);
+        // 从无水印图的右下角提取20%宽度和20%高度的区域
+        const sourceWidth = Math.floor(this.normalImage.width * 0.2);
+        const sourceHeight = Math.floor(this.normalImage.height * 0.2);
+        const sourceX = Math.max(0, this.normalImage.width - sourceWidth);
+        const sourceY = Math.max(0, this.normalImage.height - sourceHeight);
         
         // 提取右下角区域的图像数据
         const imageData = hiddenCtx.getImageData(sourceX, sourceY, sourceWidth, sourceHeight);
         
-        // 计算在主canvas上的绘制位置（右下角）
-        const destX = Math.max(0, this.canvas.width - sourceWidth);
-        const destY = Math.max(0, this.canvas.height - sourceHeight);
+        // 将提取的区域绘制到主canvas的右下角（使用主图片的20%宽高作为目标区域）
+        const targetWidth = Math.floor(this.canvas.width * 0.2);
+        const targetHeight = Math.floor(this.canvas.height * 0.2);
+        const destX = Math.max(0, this.canvas.width - targetWidth);
+        const destY = Math.max(0, this.canvas.height - targetHeight);
         
         // 直接在主canvas的右下角绘制提取的区域，不重新绘制水印图
-        this.ctx.putImageData(imageData, destX, destY);
+        // 如果源区域和目标区域尺寸不同，需要先缩放
+        if (sourceWidth !== targetWidth || sourceHeight !== targetHeight) {
+            // 创建临时canvas进行缩放
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = sourceWidth;
+            tempCanvas.height = sourceHeight;
+            tempCtx.putImageData(imageData, 0, 0);
+            
+            // 将缩放后的图像绘制到目标位置
+            this.ctx.drawImage(tempCanvas, 0, 0, sourceWidth, sourceHeight, destX, destY, targetWidth, targetHeight);
+        } else {
+            this.ctx.putImageData(imageData, destX, destY);
+        }
         
         console.log('图片合成完成');
     }
