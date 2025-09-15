@@ -219,11 +219,13 @@ class ImageMerger {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         // 添加提示文字
-        this.ctx.fillStyle = '#9ca3af';
-        this.ctx.font = '24px -apple-system, BlinkMacSystemFont, sans-serif';
+        this.ctx.fillStyle = '#333333';
+        this.ctx.font = '45px -apple-system, BlinkMacSystemFont, sans-serif';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
-        this.ctx.fillText('点击或拖拽图片到此处，先拖中文名字的', this.canvas.width / 2, this.canvas.height / 2);
+        this.ctx.fillText('1.点击小图显示大图，把大图拖到文件夹下获得英文文件名的图片', this.canvas.width / 2, this.canvas.height / 2 - 80);
+        this.ctx.fillText('2.点击大图最右上角[下载]，在下载目录下获得中文文件名的图片', this.canvas.width / 2, this.canvas.height / 2);
+        this.ctx.fillText('3.先拖放第二步的图片到此处，再拖放第一步的图片，然后点下载', this.canvas.width / 2, this.canvas.height / 2 + 80);
     }
 }
 
