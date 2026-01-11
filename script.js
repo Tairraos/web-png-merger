@@ -94,7 +94,6 @@ class ImageMerger {
             this.ctx.font = `${Math.max(16, this.canvas.width * 0.02)}px -apple-system, BlinkMacSystemFont, sans-serif`;
             this.ctx.textAlign = 'center';
             this.ctx.textBaseline = 'middle';
-            this.ctx.fillText('请拖放第二张图片（无水印图）进行合成', this.canvas.width / 2, 30);
             
             this.watermarkImage = img;
             this.currentImage = img;

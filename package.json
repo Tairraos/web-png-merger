@@ -1,6 +1,6 @@
 {
   "name": "web-png-merger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "一个纯前端的图片合成器工具，用于合并两张图片并生成新的合成图片",
   "main": "index.html",
   "scripts": {
