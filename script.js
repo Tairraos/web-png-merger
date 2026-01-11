@@ -85,16 +85,7 @@ class ImageMerger {
             // 清空canvas并绘制第一张图片
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.ctx.drawImage(img, 0, 0);
-            
-            // 在图片上方添加提示文字，告诉用户可以拖放第二张图片
-            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-            this.ctx.fillRect(0, 0, this.canvas.width, 60);
-            
-            this.ctx.fillStyle = '#ffffff';
-            this.ctx.font = `${Math.max(16, this.canvas.width * 0.02)}px -apple-system, BlinkMacSystemFont, sans-serif`;
-            this.ctx.textAlign = 'center';
-            this.ctx.textBaseline = 'middle';
-            
+
             this.watermarkImage = img;
             this.currentImage = img;
             console.log('水印图已加载，等待第二张图片');
